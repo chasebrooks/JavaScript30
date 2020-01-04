@@ -31,29 +31,80 @@
 
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
+    const fifteen = inventors.filter(inventor =>  (inventor.year >= 1500 && inventor.year < 1600));  // function defaults to looping over all items in array
 
-    // Array.prototype.map()
+      //don't need to return a false if else b/c automatically throws it out
+    console.table(fifteen)
+
+    // Array.prototype.map()  -- takes array, does something to all elements, and returns array of same length
     // 2. Give us an array of the inventors' first and last names
+    const fullNames = inventors.map(inventor => `${inventor.first} ${inventor.last}`);
+    console.log(fullNames);
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
+    // const ordered = inventors.sort(function(firstPerson, secondPerson){
+    //   if(firstPerson.year > secondPerson.year){
+    //     return 1
+    //   }else{
+    //     return -1
+    //   };
+    // });
+    const ordered = inventors.sort((a,b) => a.year>b.year ?1:-1) // same are above, but using a turnary operator
+    console.table(ordered);
 
-    // Array.prototype.reduce()
+    // Array.prototype.reduce() -- build a single value output based on array values
     // 4. How many years did all the inventors live?
+      const totalYears = inventors.reduce((total, inventor) => {
+        return total + (inventor.passed-inventor.year)
+      },0); //set starting total = 0
+      console.log(totalYears);
+
 
     // 5. Sort the inventors by years lived
 
+    const oldest = inventors.sort(function(firstPerson, secondPerson){
+      const lastGuy = firstPerson.passed - firstPerson.year;
+      const nextGuy = secondPerson.passed - secondPerson.year;
+      return (lastGuy > nextGuy) ?-1:1; // below code is full version of turnary operator
+      // if(lastGuy > nextGuy){
+      //   return -1
+      // }else{
+      //   return 1
+      // }
+    });
+    console.table(oldest)
+
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
-
+    //run following code in developer tools console on ^^ page
+    // const category = document.querySelector('.mw-category');
+    // const links = Array.from(category.querySelectorAll('a')); //returns nodelist of links and converts to array
+    // const de = links
+    //                 .map(link => link.textContent) //returns array of links textContent... streetnames
+    //                 .filter(streetName => streetName.includes('de'));
 
     // 7. sort Exercise
-    // Sort the people alphabetically by last name
+    // Sort the people alphabetically by last name... now working only with arrays
+    const alpha = people.sort((lastOne, nextOne) => {
+      const [aLast, aFirst] = lastOne.split(", ");
+      const [bLast, bFirst] = nextOne.split(", ");
+      return aLast > bLast ?1:-1;
+    });
+    console.log(alpha)
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
 
+    const tranportation = data.reduce(function(obj, item){
+      if(!obj[item]){
+        obj[item] = 0; // if item not in counter object, add it
+      }
+      obj[item]++; // increment item in counter object
+      return obj
+    },{}); //start with a blank object that will store counts
+    console.log(tranportation);
   </script>
 </body>
 </html>
